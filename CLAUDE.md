@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Medwatch** is an AI-powered medical news surveillance tool designed for journalists to monitor healthcare, medical research, and professional health topics. It aggregates relevant sources and generates structured reports with automatic tier classification (authorities > academic > accredited media > other).
+**Medwatch** is an AI-powered medical news surveillance tool designed for journalists to monitor healthcare, medical research, and professional health topics.
 
 The project is in early stages with a minimal initial implementation focusing on NewsAPI integration.
 
@@ -58,44 +58,10 @@ The SKILL.md file defines:
 **Important**: Keep news_fetcher.py output as valid JSON (array or error object) so Claude can reliably parse results.
 
 ### API Key Management
-- NewsAPI key must be inserted in `scripts/news_fetcher.py.py` (currently hardcoded)
-- Future: Move to `.env` file when expanding to multiple APIs
+- NewsAPI key must be inserted in `.env` 
 - Free tier: 100 requests/day (sufficient for development/testing)
 
 ### Known Issues
-1. **Filename typo**: `news_fetcher.py.py` should be renamed to `news_fetcher.py` (minor issue, doesn't affect functionality)
-2. **No filtering**: Raw API results include irrelevant articles—future versions need relevance filtering
-3. **French-only bias**: Current search is `language: "fr"` only—consider multilingual support for international medical sources
-
-## Next Steps (Priority Order)
-
-1. **Expand data sources**:
-   - Add Tavily API for web search (news + sources)
-   - Integrate PubMed RSS for academic papers
-   - Add direct scraping of Tier 1 sources (HAS, Ansm)
-   - Implement deduplication across sources
-
-2. **Add content processing**:
-   - Fetch full article text from URLs
-   - Extract key metadata (date, author, domain)
-   - Generate 300-500 character summaries
-   - Classify sources by tier
-
-3. **Build the orchestrator**:
-   - Create `src/orchestrator.py` to coordinate workflow
-   - Implement `src/synthesizer.py` for tier ranking and report generation
-   - Add JSON and Markdown output templates
-
-4. **Improve reliability**:
-   - Add error handling for API failures
-   - Implement request retries with backoff
-   - Cache results locally (SQLite or JSON)
-   - Add comprehensive test suite
-
-5. **Optimize UX**:
-   - Better Claude Skill output formatting
-   - Support for saved searches / alerts
-   - Performance profiling (target: <20s per report)
 
 ## Development Practices
 

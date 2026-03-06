@@ -1,6 +1,6 @@
 ---
 name: medwatch
-description: Recherche et résume l'actualité médicale récente via NewsAPI à partir de requêtes en langage naturel.
+description: Recherche et résume l'actualité récente concernant les médecins via NewsAPI à partir de requêtes en langage naturel.
 ---
 
 # medwatch
@@ -17,7 +17,7 @@ Utilisez ce skill lorsque l'utilisateur demande :
 
 ## Tools
 
-Le skill s'appuie sur la commande suivante définie dans le frontmatter :
+Le skill s'appuie sur la commande suivante :
 - `scripts/.venv/bin/python3 scripts/news_fetcher.py "{query}" {days}`
 - `{query}` : Mots-clés extraits et optimisés par Claude.
 - `{days}` : Nombre de jours (par défaut 1 si non spécifié).
@@ -37,18 +37,39 @@ Avant d'exécuter la commande, traduisez l'intention de l'utilisateur en une req
 
 ### 3. Rédaction des résumés
 Rédigez pour chaque article un résumé de 3 à 4 lignes maximum.
-- **Ton** : Professionnel, factuel.
+- **Ton** : Professionnel, factuel, pas de jugement.
 - **Contenu** : Indiquez quelle est l'information essentielle et en quoi cela peut intéresser les médecins.
 
 ## Output Format
 
-Affichez les résultats sous cette forme :
+Enregistrer les résultats dans un nouveau fichier nommé `reports/{query_sanitisée}_{date_du_jour}.md` (remplacez espaces et caractères spéciaux par `_` dans le nom de fichier).
+Les informations doivent être présentées sous cette forme :
 
 ### [TITRE DE L'ARTICLE EN MAJUSCULES]
 - **Source** : {source_name}
 - **Date** : {date_formatée}
 - **Résumé** : {votre_synthèse_rédigée}
-- **Lien** : [Consulter l'article]({url})
+- **Lien** : {url}
+
+Après la liste des articles retenus, ajoutez une section **Articles non retenus** regroupant les exclus par motif, sous cette forme :
+
+---
+
+## Articles non retenus
+
+**Doublons** *(même information, sources différentes)*
+- {titre_court} — {source} — ({url})
+
+**Santé mais sans mention explicite de "{mot_clé_requête}"**
+- {titre_court} — {source} — ({url})
+
+**Justice / faits divers**
+- {titre_court} — {source} — ({url})
+
+**Hors sujet**
+- {titre_court} — {source} — ({url})
+
+> N'afficher que les catégories non vides. Omettre une catégorie si elle ne contient aucun article exclu.
 
 ---
 
@@ -56,14 +77,14 @@ Affichez les résultats sous cette forme :
 
 **Journaliste** : "Fais-moi une veille sur la maladie de Crohn depuis hier."
 **Action** : Claude identifie `query="maladie de Crohn"` et `days=1`.
-**Exécution** : `python3 news_fetcher.py "maladie de Crohn" 1`
+**Exécution** : `scripts/.venv/bin/python3 news_fetcher.py "maladie de Crohn" 1`
 **Résultat** : Affiche les articles formatés selon le standard.
 
 **Journaliste** : "Quelles sont les alertes de l'ANSM sur les 7 derniers jours ?"
 **Action** : Claude identifie `query="ANSM OR alerte médicament"` et `days=7`.
-**Exécution** : `python3 news_fetcher.py "ANSM OR alerte médicament" 7`
+**Exécution** : `scripts/.venv/bin/python3 news_fetcher.py "ANSM OR alerte médicament" 7`
 
 **Journaliste** : "Fais-moi une veille sur l'actualité socio-pro des médecins au cours des 24 dernières heures."
 **Action** : Claude identifie `query="médecin santé"` et `days=1`.
-**Exécution** : `python3 news_fetcher.py "médecin santé" 1`
+**Exécution** : `scripts/.venv/bin/python3 news_fetcher.py "médecin santé" 1`
 **Résultat** : Affiche les articles formatés selon le standard.

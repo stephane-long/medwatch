@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Remplacez par votre clé NewsAPI
-API_KEY = os.getenv("NEWSAPI_API_KEY")
+NEWSAPI_API_KEY = os.getenv("NEWSAPI_API_KEY")
 
 
 def search_news(query, days=1):
@@ -20,8 +20,8 @@ def search_news(query, days=1):
         "q": query,
         "from": from_date,
         "sortBy": "relevancy",
-        "language": "fr",  # On peut ajouter "en" pour plus de résultats médicaux
-        "apiKey": API_KEY,
+        "language": "fr",
+        "apiKey": NEWSAPI_API_KEY,
     }
 
     try:
