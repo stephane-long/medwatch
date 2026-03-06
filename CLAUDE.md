@@ -6,72 +6,82 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Medwatch** is an AI-powered medical news surveillance tool designed for journalists to monitor healthcare, medical research, and professional health topics.
 
-The project is in early stages with a minimal initial implementation focusing on NewsAPI integration.
+The project integrates NewsAPI and Tavily as search sources, with structured markdown reports as output.
 
 ## Quick Start
 
 ### Setup
-1. **Install dependencies**: `pip install requests`
-2. **Configure API key**: Replace `"VOTRE_CLE_NEWS_API"` in `scripts/news_fetcher.py.py` with a valid NewsAPI key (free tier available at newsapi.org)
-3. **Run a search**: `python3 scripts/news_fetcher.py "query text" [days]`
-   - Example: `python3 scripts/news_fetcher.py "maladie de Crohn" 7`
-   - Returns JSON array of articles from the past N days
+1. **Créer le venv** : `python3 -m venv scripts/.venv`
+2. **Installer les dépendances** : `pip install -r scripts/requirements.txt`
+3. **Configurer les clés API** : créer un fichier `.env` à la racine avec :
+   ```
+   NEWSAPI_API_KEY=votre_cle_newsapi
+   TAVILY_API_KEY=votre_cle_tavily
+   ```
+4. **Lancer une recherche** : `scripts/.venv/bin/python3 scripts/news_fetcher.py "query text" [days]`
+   - Exemple : `scripts/.venv/bin/python3 scripts/news_fetcher.py "maladie de Crohn" 7`
+   - Retourne un JSON des résultats Tavily
 
 ### As a Claude Skill
-The tool can be invoked as a Claude Skill through SKILL.md. Claude will:
-1. Parse user intent to extract search query and timeframe
-2. Execute the fetcher script
-3. Format results with summaries for the user
+Le skill est défini dans SKILL.md. Claude :
+1. Extrait la requête et la période depuis l'intention de l'utilisateur
+2. Exécute le script via le venv
+3. Formate les résultats et les écrit dans `reports/`
 
 ## Architecture
 
-### Current Structure
+### Structure actuelle
 ```
 medwatch/
-├── CLAUDE.md              # This file
-├── SKILL.md               # Claude Skill configuration
+├── CLAUDE.md              # Ce fichier
+├── SKILL.md               # Configuration du Claude Skill
+├── reports/               # Rapports générés en markdown
+│   └── {query}_{date}.md
 └── scripts/
-    └── news_fetcher.py.py # NewsAPI integration (main entry point)
+    ├── news_fetcher.py    # Point d'entrée principal
+    ├── requirements.txt   # Dépendances figées
+    └── .venv/             # Environnement virtuel Python
 ```
 
-### How It Works Today
-- **Single data source**: NewsAPI (French & international health news)
-- **Basic output**: Raw JSON from API
-- **No processing**: Articles returned as-is without filtering or classification
+### Fonctionnement actuel
+- **Source active** : Tavily API (recherche web avancée avec filtre de dates)
+- **Source disponible** : NewsAPI (intégrée mais commentée dans `__main__`)
+- **Déduplication** : fonction `deduplicate_sources()` disponible (non active sur Tavily)
+- **Output** : JSON brut retourné par le script, mis en forme par SKILL.md → fichiers `reports/`
 
-### Planned Architecture (Phase 2)
-The system should evolve to support:
-- **Multiple data sources**: Tavily API + NewsAPI + PubMed RSS + Tier 1 scraping (HAS, Ansm, Santé Publique France)
-- **Source classification**: Automatic Tier assignment (1=Authorities, 2=Academic, 3=Media, 4=Other)
-- **Content extraction**: Fetch full articles and extract 300-500 character summaries
-- **Structured output**: JSON + Markdown reports with organized sources by tier
-- **Full workflow**: orchestrator.py → search → extract → synthesize → report
+### Architecture cible (Phase 2)
+- **Sources supplémentaires** : PubMed RSS + scraping Tier 1 (HAS, Ansm, Santé Publique France)
+- **Classification des sources** : Tier 1=Autorités, 2=Académique, 3=Médias, 4=Autre
+- **Extraction de contenu** : résumés 300-500 caractères depuis les articles complets
+- **Orchestrateur** : `orchestrator.py` → search → extract → synthesize → report
 
 ## Key Implementation Notes
 
 ### SKILL.md Contract
-The SKILL.md file defines:
-- Command format: `python3 news_fetcher.py "{query}" {days}`
-- Expected output: JSON array of articles
-- Claude's responsibility: query preprocessing, output formatting, presentation
+- Commande : `scripts/.venv/bin/python3 scripts/news_fetcher.py "{query}" {days}`
+- Output attendu : JSON (objet Tavily ou objet erreur)
+- Responsabilité de Claude : prétraitement de la requête, filtrage pertinence, rédaction résumés, écriture dans `reports/`
 
-**Important**: Keep news_fetcher.py output as valid JSON (array or error object) so Claude can reliably parse results.
+**Important** : conserver un output JSON valide pour que Claude puisse parser les résultats.
 
-### API Key Management
-- NewsAPI key must be inserted in `.env` 
-- Free tier: 100 requests/day (sufficient for development/testing)
+### Gestion des clés API
+- Les deux clés doivent être dans `.env` à la racine (chargé via `python-dotenv`)
+- NewsAPI : free tier 100 req/jour — suffisant pour dev/test
+- Tavily : vérifier les quotas selon le plan souscrit
 
 ### Known Issues
+- NewsAPI désactivé dans `__main__` (commenté) — les lignes `deduplicate_sources` associées sont aussi commentées.
 
 ## Development Practices
 
-- **Language**: Python 3.9+
-- **Dependencies**: Keep minimal (requests + standard library for now)
-- **Testing**: Unit tests in `tests/` directory (use pytest)
-- **Code style**: Follow PEP 8
-- **API keys**: Never commit API keys; use environment variables in production
+- **Language** : Python 3.9+
+- **Dependencies** : gérées via `scripts/requirements.txt` + venv dans `scripts/.venv/`
+- **Testing** : tests unitaires dans `tests/` (pytest)
+- **Code style** : PEP 8
+- **API keys** : jamais commitées — utiliser `.env` (ignoré par git)
 
 ## Reference Documents
 
-- **SKILL.md**: Claude Skill configuration, command format, output expectations
-- **newsapi.org**: API documentation and free key signup
+- **SKILL.md** : configuration du skill, format de commande, format de sortie attendu
+- **newsapi.org** : documentation API et inscription free tier
+- **tavily.com** : documentation API Tavily
