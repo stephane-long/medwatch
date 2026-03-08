@@ -1,6 +1,7 @@
 ---
 name: medwatch
 description: Recherche et résume l'actualité récente concernant les médecins via NewsAPI à partir de requêtes en langage naturel.
+user-invocable: true
 ---
 
 # medwatch
@@ -17,10 +18,11 @@ Utilisez ce skill lorsque l'utilisateur demande :
 
 ## Tools
 
-Le skill s'appuie sur la commande suivante :
-- `scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "{query}" --days {days}`
-- `{query}` : Mots-clés extraits et optimisés par Claude.
-- `--days {days}` : Nombre de jours (par défaut 1 si non spécifié).
+Le skill s'appuie sur la commande suivante (à exécuter via l'interpréteur Python de l'environnement virtuel local) :
+- `[VENV_PYTHON] -X utf8 scripts/news_fetcher.py "{query}" --days {days}`
+
+> [!TIP]
+> **Chemin du VENV** : Localisez l'exécutable Python dans `scripts/.venv/Scripts/python.exe` (Windows) ou `scripts/.venv/bin/python` (macOS/Linux).
 
 ## Instructions
 
@@ -42,9 +44,9 @@ Rédigez pour chaque article un résumé de 3 à 4 lignes maximum.
 
 ## Output Format
 
-Enregistrer le rapport dans `reports/{query_sanitisée}_{date_du_jour}.md` (remplacer espaces et caractères spéciaux par `_`).
+**ACTION OBLIGATOIRE** : Vous DEVEZ générer et enregistrer ce rapport dans un fichier physique `reports/{query_sanitisée}_{date_du_jour}.md` (remplacez les espaces et caractères spéciaux par `_`). Une fois le fichier créé, confirmez son emplacement exact à l'utilisateur.
 
-Le rapport est structuré en **3 sections dans l'ordre suivant** :
+Le rapport doit être structuré en **3 sections dans l'ordre suivant** :
 
 ---
 
@@ -100,15 +102,15 @@ Répéter le gabarit suivant pour chaque article retenu :
 ## Examples
 
 **Journaliste** : "Fais-moi une veille sur la maladie de Crohn depuis hier."
-**Action** : Claude identifie `query="maladie de Crohn"` et `days=1`.
-**Exécution** : `scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "maladie de Crohn" --days 1`
+**Action** : L'assistant identifie `query="maladie de Crohn"` et `days=1`.
+**Exécution** : `[VENV_PYTHON] -X utf8 scripts/news_fetcher.py "maladie de Crohn" --days 1`
 **Résultat** : Affiche les articles formatés selon le standard.
 
 **Journaliste** : "Quelles sont les alertes de l'ANSM sur les 7 derniers jours ?"
-**Action** : Claude identifie `query="ANSM OR alerte médicament"` et `days=7`.
-**Exécution** : `scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "ANSM OR alerte médicament" --days 7`
+**Action** : L'assistant identifie `query="ANSM OR alerte médicament"` et `days=7`.
+**Exécution** : `[VENV_PYTHON] -X utf8 scripts/news_fetcher.py "ANSM OR alerte médicament" --days 7`
 
 **Journaliste** : "Fais-moi une veille sur l'actualité socio-pro des médecins au cours des 24 dernières heures."
-**Action** : Claude identifie `query="médecin santé"` et `days=1`.
-**Exécution** : `scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "médecin santé" --days 1`
+**Action** : L'assistant identifie `query="médecin santé"` et `days=1`.
+**Exécution** : `[VENV_PYTHON] -X utf8 scripts/news_fetcher.py "médecin santé" --days 1`
 **Résultat** : Affiche les articles formatés selon le standard.
