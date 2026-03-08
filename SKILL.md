@@ -18,9 +18,9 @@ Utilisez ce skill lorsque l'utilisateur demande :
 ## Tools
 
 Le skill s'appuie sur la commande suivante :
-- `scripts/.venv/bin/python3 scripts/news_fetcher.py "{query}" {days}`
+- `scripts/.venv/bin/python scripts/main.py "{query}" --days {days}`
 - `{query}` : Mots-clés extraits et optimisés par Claude.
-- `{days}` : Nombre de jours (par défaut 1 si non spécifié).
+- `--days {days}` : Nombre de jours (par défaut 1 si non spécifié).
 
 ## Instructions
 
@@ -77,14 +77,14 @@ Après la liste des articles retenus, ajoutez une section **Articles non retenus
 
 **Journaliste** : "Fais-moi une veille sur la maladie de Crohn depuis hier."
 **Action** : Claude identifie `query="maladie de Crohn"` et `days=1`.
-**Exécution** : `scripts/.venv/bin/python3 news_fetcher.py "maladie de Crohn" 1`
+**Exécution** : `scripts/.venv/bin/python scripts/main.py "maladie de Crohn" --days 1`
 **Résultat** : Affiche les articles formatés selon le standard.
 
 **Journaliste** : "Quelles sont les alertes de l'ANSM sur les 7 derniers jours ?"
 **Action** : Claude identifie `query="ANSM OR alerte médicament"` et `days=7`.
-**Exécution** : `scripts/.venv/bin/python3 news_fetcher.py "ANSM OR alerte médicament" 7`
+**Exécution** : `scripts/.venv/bin/python scripts/main.py "ANSM OR alerte médicament" --days 7`
 
 **Journaliste** : "Fais-moi une veille sur l'actualité socio-pro des médecins au cours des 24 dernières heures."
 **Action** : Claude identifie `query="médecin santé"` et `days=1`.
-**Exécution** : `scripts/.venv/bin/python3 news_fetcher.py "médecin santé" 1`
+**Exécution** : `scripts/.venv/bin/python scripts/main.py "médecin santé" --days 1`
 **Résultat** : Affiche les articles formatés selon le standard.
