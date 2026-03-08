@@ -5,7 +5,7 @@ description: Recherche et résume l'actualité récente concernant les médecins
 
 # medwatch
 
-Ce skill permet aux journalistes de réaliser une veille automatisée sur des sujets de santé concernant les médecins, en transformant une intention de recherche en une revue de presse structurée.
+Ce skill permet aux journalistes de réaliser une veille automatisée sur des sujets de santé ou relatifs au système de soins concernant les médecins, en transformant une intention de recherche en une revue de presse structurée.
 
 ## Usage
 
@@ -42,24 +42,42 @@ Rédigez pour chaque article un résumé de 3 à 4 lignes maximum.
 
 ## Output Format
 
-Enregistrer les résultats dans un nouveau fichier nommé `reports/{query_sanitisée}_{date_du_jour}.md` (remplacez espaces et caractères spéciaux par `_` dans le nom de fichier).
-Les informations doivent être présentées sous cette forme :
+Enregistrer le rapport dans `reports/{query_sanitisée}_{date_du_jour}.md` (remplacer espaces et caractères spéciaux par `_`).
 
-### [TITRE DE L'ARTICLE EN MAJUSCULES]
-- **Source** : {source_name}
-- **Date** : {date_formatée}
-- **Résumé** : {votre_synthèse_rédigée}
-- **Lien** : {url}
-
-Avant la liste des articles retenus, ajouter une section sous la forme suivante :
-"# Veille médecins & santé — 08 mars 2026
-
-**Requête** : `médecin santé` | **Période** : 24 dernières heures | **Sources** : NewsAPI ({nombre d'articles retenus de Tavily}), Tavily {nombre d'articels retenus pour NewsAPI}"
-
-Après la liste des articles retenus, ajoutez une section **Articles non retenus** regroupant les exclus par motif, sous cette forme :
+Le rapport est structuré en **3 sections dans l'ordre suivant** :
 
 ---
 
+### Section 1 — En-tête de synthèse
+
+```
+# Veille {sujet} — {date_du_jour en toutes lettres}
+
+**Requête** : `{query}` | **Période** : {N} jour(s) | **Sources** : NewsAPI ({N} articles retenus), Tavily ({N} articles retenus)
+```
+
+> Si des erreurs ont été détectées lors de l'exécution, les mentionner ici sous forme de bloc citation.
+> Si les résultats sont peu pertinents, suggérer ici une requête alternative.
+
+---
+
+### Section 2 — Articles retenus
+
+Répéter le gabarit suivant pour chaque article retenu :
+
+```
+### [TITRE DE L'ARTICLE EN MAJUSCULES]
+- **Source** : {source_name}
+- **Date** : {date_formatée}
+- **Résumé** : {synthèse de 3 à 4 lignes}
+- **Lien** : {url}
+```
+
+---
+
+### Section 3 — Articles non retenus
+
+```
 ## Articles non retenus
 
 **Doublons** *(même information, sources différentes)*
@@ -73,8 +91,9 @@ Après la liste des articles retenus, ajoutez une section **Articles non retenus
 
 **Hors sujet**
 - {titre_court} — {source} — ({url})
+```
 
-> N'afficher que les catégories non vides. Omettre une catégorie si elle ne contient aucun article exclu.
+> N'afficher que les catégories non vides.
 
 ---
 
@@ -82,14 +101,14 @@ Après la liste des articles retenus, ajoutez une section **Articles non retenus
 
 **Journaliste** : "Fais-moi une veille sur la maladie de Crohn depuis hier."
 **Action** : Claude identifie `query="maladie de Crohn"` et `days=1`.
-**Exécution** : `scripts/.venv/bin/python scripts/main.py "maladie de Crohn" --days 1`
+**Exécution** : `scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "maladie de Crohn" --days 1`
 **Résultat** : Affiche les articles formatés selon le standard.
 
 **Journaliste** : "Quelles sont les alertes de l'ANSM sur les 7 derniers jours ?"
 **Action** : Claude identifie `query="ANSM OR alerte médicament"` et `days=7`.
-**Exécution** : `scripts/.venv/bin/python scripts/main.py "ANSM OR alerte médicament" --days 7`
+**Exécution** : `scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "ANSM OR alerte médicament" --days 7`
 
 **Journaliste** : "Fais-moi une veille sur l'actualité socio-pro des médecins au cours des 24 dernières heures."
 **Action** : Claude identifie `query="médecin santé"` et `days=1`.
-**Exécution** : `scripts/.venv/bin/python scripts/main.py "médecin santé" --days 1`
+**Exécution** : `scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "médecin santé" --days 1`
 **Résultat** : Affiche les articles formatés selon le standard.
