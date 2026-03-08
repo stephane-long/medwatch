@@ -1,73 +1,43 @@
-import os
-import sys
-import json
-from datetime import datetime, timedelta
+import typer
 from dotenv import load_dotenv
-from newsapi import NewsApiClient
-from tavily import TavilyClient
+from models import ReponseGlobale
+from pipeline import run_pipeline
 
 load_dotenv()
-NEWSAPI_API_KEY = os.getenv("NEWSAPI_API_KEY")
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
+
+app = typer.Typer(help="Application MedWatch pour la veille d'actualité")
 
 
-def deduplicate_sources(sources):
-    seen_url = set()
-    unique = []
-
-    for source in sources:
-        url = source.get("url", "")
-        if url and url not in seen_url:
-            unique.append(url)
-            seen_url.add(url)
-    return unique
-
-
-def search_newsapi(query, days=1):
-    # Calcul de la date de début
-    from_date = (datetime.now() - timedelta(days=int(days))).strftime("%Y-%m-%d")
-
-    newsapi = NewsApiClient(api_key=NEWSAPI_API_KEY)
-
+@app.command()
+def fetch(
+    query: str = typer.Argument(..., help="Les mots-clés de la recherche"),
+    days: int = typer.Option(
+        1,
+        "--days",
+        "-d",
+        help="Nombre de jours dans le passé à rechercher (ex: 1 pour 24h)",
+    ),
+):
+    """
+    Lance une recherche d'actualités sur différentes sources (NewsAPI, Tavily)
+    et les formate pour Claude.
+    """
     try:
-        all_articles = newsapi.get_everything(
-            q=query, from_param=from_date, language="fr", sort_by="relevancy"
-        )
-        return all_articles
+        # Exécute l'orchestrateur central
+        reponse: ReponseGlobale = run_pipeline(query, days)
+
+        # Affiche le résultat avec la conversion JSON stricte générée explicitement par Pydantic
+        # On utilise print et non typer.echo ici pour que Claude puisse lire le JSON brut de stdout
+        print(reponse.model_dump_json(indent=2))
+
     except Exception as e:
-        return {"error": str(e)}
-
-
-def search_tavily(query, days):
-    end_date = datetime.now().strftime("%Y-%m-%d")
-    start_date = (datetime.now() - timedelta(days=int(days))).strftime("%Y-%m-%d")
-    print(f"Dates : {start_date} -> {end_date}")
-
-    client = TavilyClient(TAVILY_API_KEY)
-    try:
-        response = client.search(
-            query=query,
-            search_depth="advanced",
-            start_date=start_date,
-            end_date=end_date,
+        # Si le système s'effondre pour des raisons inattendues,
+        # on garantit un format de sortie JSON d'erreur propre pour Claude
+        erreur_globale = ReponseGlobale(
+            requete=query, statut="erreur", message_erreur=str(e)
         )
-        return response
-    except Exception as e:
-        return {"error": str(e)}
+        print(erreur_globale.model_dump_json(indent=2))
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print(json.dumps({"error": "Query missing"}))
-        sys.exit(1)
-
-    user_query = sys.argv[1]
-    days_to_search = sys.argv[2] if len(sys.argv) > 2 else 1
-
-    #    results = search_newsapi(user_query, days_to_search)
-    results = search_tavily(user_query, days_to_search)
-
-    #    sources = deduplicate_sources(results.get("articles", ""))
-    print(json.dumps(results, indent=2, ensure_ascii=False))
-
-#    print(f"Doublons : {int(results.get('totalResults')) - len(sources)}")
+    app()
