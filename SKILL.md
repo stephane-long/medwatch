@@ -18,7 +18,7 @@ Utilisez ce skill lorsque l'utilisateur demande :
 ## Tools
 
 Le skill s'appuie sur la commande suivante :
-- `scripts/.venv/bin/python scripts/main.py "{query}" --days {days}`
+- `scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "{query}" --days {days}`
 - `{query}` : Mots-clés extraits et optimisés par Claude.
 - `--days {days}` : Nombre de jours (par défaut 1 si non spécifié).
 
@@ -50,6 +50,11 @@ Les informations doivent être présentées sous cette forme :
 - **Date** : {date_formatée}
 - **Résumé** : {votre_synthèse_rédigée}
 - **Lien** : {url}
+
+Avant la liste des articles retenus, ajouter une section sous la forme suivante :
+"# Veille médecins & santé — 08 mars 2026
+
+**Requête** : `médecin santé` | **Période** : 24 dernières heures | **Sources** : NewsAPI ({nombre d'articles retenus de Tavily}), Tavily {nombre d'articels retenus pour NewsAPI}"
 
 Après la liste des articles retenus, ajoutez une section **Articles non retenus** regroupant les exclus par motif, sous cette forme :
 

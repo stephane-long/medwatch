@@ -1,7 +1,14 @@
+import io
+import sys
+
 import typer
 from dotenv import load_dotenv
 from models import ReponseGlobale
 from pipeline import run_pipeline
+
+# Forçage de l'UTF-8 pour la sortie standard, utile sur Windows
+if sys.stdout.encoding != "utf-8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 load_dotenv()
 
