@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime
 from typing import List
 import re
+import html
 from models import Article
 
 def fetch_from_googlenews(query: str, days: int = 1) -> List[Article]:
@@ -32,16 +33,16 @@ def fetch_from_googlenews(query: str, days: int = 1) -> List[Article]:
                 source_name = source_elem.text if source_elem is not None else "Google News"
                 
                 # Conversion de la date (format RSS: Mon, 09 Mar 2026 17:00:02 GMT)
-                # On essaie d'extraire au moins YYYY-MM-DD
                 try:
-                    # Format standard RSS pubDate: e.g., "Mon, 09 Mar 2026 17:00:02 GMT"
                     dt = datetime.strptime(pub_date_raw, "%a, %d %b %Y %H:%M:%S %Z")
                     date_publication = dt.strftime("%Y-%m-%d")
                 except Exception:
-                    date_publication = pub_date_raw # Fallback si parsing échoue
+                    date_publication = pub_date_raw
                 
-                # Nettoyage sommaire de la description (HTML tags)
-                extrait = re.sub(r"<[^>]+>", "", description).strip()
+                # Nettoyage HTML et décodage des entités (ex: &nbsp;)
+                extrait_clean = re.sub(r"<[^>]+>", "", description).strip()
+                extrait = html.unescape(extrait_clean)
+                title = html.unescape(title)
                 
                 article = Article(
                     titre=title,
@@ -49,7 +50,7 @@ def fetch_from_googlenews(query: str, days: int = 1) -> List[Article]:
                     date_publication=date_publication,
                     source=source_name,
                     moteur="GoogleNews",
-                    extrait=extrait or title, # Fallback sur le titre si l'extrait est vide
+                    extrait=extrait or title,
                 )
                 articles.append(article)
                 
