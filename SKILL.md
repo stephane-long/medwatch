@@ -35,7 +35,10 @@ Avant d'exécuter la commande, traduisez l'intention de l'utilisateur en une req
 - Lancez la commande Python.
 - Si le script retourne un JSON vide, informez l'utilisateur qu'aucune actualité n'a été trouvée pour cette période et suggérez d'élargir la recherche.
 - Si le script retourne un objet JSON avec une clé "error", informez l'utilisateur du problème technique (clé API invalide, problème réseau) et suggérez de réessayer.
-- En cas de succès, analysez chaque article pour vérifier sa pertinence vis à vis de la requête de l'utilisateur.
+- En cas de succès, analysez chaque article pour vérifier sa pertinence.
+- **Principe d'exhaustivité** : Ne soyez pas trop restrictif. Un article est pertinent s'il traite de la pratique médicale, de la démographie, de l'éthique, de la formation ou des conditions d'exercice.
+- **Priorité aux sources de référence** : Un reportage de fond ou une enquête d'un média national (ex: Le Monde, Le Figaro, Les Échos) doit TOUJOURS être retenu s'il concerne le système de santé, même s'il n'est pas purement clinique.
+- **Diversité des sujets** : Assurez-vous de couvrir les différents axes : institutionnel, clinique, socio-professionnel et innovation.
 
 ### 3. Rédaction des résumés
 Rédigez pour chaque article un résumé de 3 à 4 lignes maximum.
@@ -46,7 +49,7 @@ Rédigez pour chaque article un résumé de 3 à 4 lignes maximum.
 
 **ACTION OBLIGATOIRE** : Vous DEVEZ générer et enregistrer ce rapport dans un fichier physique `reports/{query_sanitisée}_{date_du_jour}.md` (remplacez les espaces et caractères spéciaux par `_`). Une fois le fichier créé, confirmez son emplacement exact à l'utilisateur.
 
-Le rapport doit être structuré en **3 sections dans l'ordre suivant** :
+Le rapport doit être structuré en **3 sections dans l'ordre suivant** (supprime la mention "Section x" dansle rapport final):
 
 ---
 
@@ -78,24 +81,25 @@ Répéter le gabarit suivant pour chaque article retenu :
 ---
 
 ### Section 3 — Articles non retenus
+Cette section sert à justifier l'écartement de certains résultats pour garantir la crédibilité de la veille. Pour cahque article, n'oublie pas de metionner le titre, la source et l'URL.
 
 ```
 ## Articles non retenus
 
-**Doublons** *(même information, sources différentes)*
+**Doublons** *(Articles traitant du même sujet exact avec une information identique)*
 - {titre_court} — {source} — ({url})
 
-**Santé mais sans mention explicite de "{mot_clé_requête}"**
+**Santé sans mention des médecins** *(Articles médicaux généraux ne ciblant pas la profession ou le système de soins)*
 - {titre_court} — {source} — ({url})
 
-**Justice / faits divers**
+**Justice / Faits divers** *(Sauf si implication déontologique majeure du médecin)*
 - {titre_court} — {source} — ({url})
 
-**Hors sujet**
+**Hors sujet** *(Sujets n'ayant aucun lien avec la santé ou la pratique médicale)*
 - {titre_court} — {source} — ({url})
 ```
 
-> N'afficher que les catégories non vides.
+> N'afficher que les catégories non vides. Les articles de sources majeures (Le Monde, etc.) ne doivent se trouver ici que s'ils sont réellement hors sujet ou doublons.
 
 ---
 
