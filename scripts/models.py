@@ -24,7 +24,7 @@ class Article(BaseModel):
     )
 
     # Validation stricte du moteur autorisé
-    moteur: Literal["NewsAPI", "Tavily", "PubMed", "GoogleNews"] = Field(
+    moteur: Literal["NewsAPI", "Tavily", "PubMed", "GoogleNews", "ANSM"] = Field(
         ..., description="Le moteur ayant extrait la donnée"
     )
 
