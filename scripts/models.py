@@ -1,10 +1,9 @@
 from typing import List, Literal, Optional
 
-from pydantic import BaseModel, Field, HttpUrl, field_validator
+from pydantic import BaseModel, Field, HttpUrl, field_validator, model_validator
 
 
 class Article(BaseModel):
-    # Strip enlève les espaces inutiles, min_length empêche les titres vides
     titre: str = Field(
         ...,
         strip_whitespace=True,
@@ -24,8 +23,8 @@ class Article(BaseModel):
     )
 
     # Validation stricte du moteur autorisé
-    moteur: Literal["NewsAPI", "Tavily", "PubMed", "GoogleNews", "ANSM"] = Field(
-        ..., description="Le moteur ayant extrait la donnée"
+    moteur: Literal["NewsAPI", "Tavily", "PubMed", "GoogleNews", "ANSM", "JAMA"] = (
+        Field(..., description="Le moteur ayant extrait la donnée")
     )
 
     # On garantit que l'extrait ne sera jamais silencieusement vide, et on le coupe s'il est trop long plus tard
@@ -39,6 +38,14 @@ class Article(BaseModel):
     score: Optional[float] = Field(
         None, ge=0.0, le=1.0, description="Score de pertinence entre 0 et 1"
     )
+
+    @model_validator(mode="after")
+    def prefix_extrait_with_source(self) -> "Article":
+        """Préfixe l'extrait par la source pour faciliter la recherche et la lecture."""
+        prefix = f"[{self.source}]"
+        if not self.extrait.startswith(prefix):
+            self.extrait = f"{prefix} {self.extrait}"
+        return self
 
     # Exemple de validateur (nettoyeur de texte automatique)
     @field_validator("extrait")

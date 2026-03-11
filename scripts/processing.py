@@ -32,7 +32,7 @@ def process_results(query: str, raw_articles: List[Article]) -> ReponseGlobale:
     l'objet de réponse finale formaté pour l'IA.
     """
     unique_articles = deduplicate_articles(raw_articles)
-    final_articles = limit_results(unique_articles, 50)
+    final_articles = limit_results(unique_articles, 100)
 
     comptage_sources = {}
     for article in final_articles:
