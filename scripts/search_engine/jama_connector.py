@@ -9,7 +9,7 @@ import httpx
 from models import Article
 
 
-def fetch_from_jama(query: str = "", days: int = 1) -> List[Article]:
+def fetch_from_jama(days: int = 1) -> List[Article]:
     """
     Récupère les articles depuis les flux RSS de JAMA.
     """
@@ -22,7 +22,6 @@ def fetch_from_jama(query: str = "", days: int = 1) -> List[Article]:
     }
 
     articles = []
-    query_lower = query.lower() if query else ""
 
     with httpx.Client(follow_redirects=True) as client:
         for url in urls:
@@ -40,15 +39,6 @@ def fetch_from_jama(query: str = "", days: int = 1) -> List[Article]:
                     # JAMA format: Mon, 09 Mar 2026 00:00:00 GMT
                     pub_date_raw = item.findtext("pubDate", "")
                     description = item.findtext("description", "")
-
-                    # Filtrage par mots-clés
-                    if (
-                        query_lower
-                        and query_lower != "jama"
-                        and query_lower not in title.lower()
-                        and query_lower not in description.lower()
-                    ):
-                        continue
 
                     # Conversion de la date
                     dt = None

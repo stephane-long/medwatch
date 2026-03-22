@@ -1,0 +1,156 @@
+{
+  "requete": "Ordre des médecins OR syndicat OR grève médicale OR condition travail médecin OR déontologie médecin",
+  "statut": "succès",
+  "nombre_articles_trouves": 16,
+  "nombre_articles_par_source": {
+    "JAMA": 11,
+    "Tavily": 5
+  },
+  "articles": [
+    {
+      "titre": "Surveillance of Sepsis in Children—Making Every Case Count",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846849",
+      "date_publication": "2026-03-22",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] Sepsis is a leading cause of hospital admissions, mortality, and health care expenditure worldwide. It disproportionally affects very young and very old individuals. Sepsis in young individuals carries a magnified societal impact through potential years of life lost and reductions in quality-adjusted life-years. Sepsis increases the risk of functional impairment that may persist for decades, translating into sustained health care needs and reduced lifetime economic productivity. While many countries maintain public surveillance systems for common infectious diseases such as influenza, the absence of systematic sepsis surveillance obscures the full societal burden of disease, limits benchmarking of care, and hinders effective public health measures.",
+      "score": null
+    },
+    {
+      "titre": "National Estimates of Pediatric Sepsis in US Hospitals Using Clinical Data",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846848",
+      "date_publication": "2026-03-22",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] This cohort study assesses US incidence, mortality, and trends of sepsis in nonneonatal children using a Pediatric Sepsis Event (PSE) definition adapted from the 2024 Phoenix criteria for scalable electronic health record (EHR)–based surveillance.",
+      "score": null
+    },
+    {
+      "titre": "Audio Highlights March 20, 2026 ",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846953",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] Listen to the JAMA Editor’s Summary for an overview and discussion of the important articles appearing in JAMA.",
+      "score": null
+    },
+    {
+      "titre": "Colorectal Cancer Is Increasing in Younger Adults",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846859",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] Colorectal cancer rates in the US increased by about 1% per year from 2018 to 2022, driven by cases in people younger than 65 years.",
+      "score": null
+    },
+    {
+      "titre": "GLP-1 Drugs May Lead to Greater Weight Loss in Women",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846858",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] Glucagon-like peptide-1 (GLP-1) receptor agonists may be more effective in women than in men, according to research published in JAMA Internal Medicine.",
+      "score": null
+    },
+    {
+      "titre": "ACOG Endometriosis Guidelines Target Diagnostic Delays",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846857",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] The American College of Obstetricians & Gynecologists (ACOG) published new clinical guidance for endometriosis, including the first comprehensive recommendations on diagnosis.",
+      "score": null
+    },
+    {
+      "titre": "Long COVID Prevalence Decreases as Recovery Rates Improve",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846856",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] Onset of post–COVID-19 condition, also known as long COVID, has become less prevalent in the US since the start of the pandemic, and recovery rates have improved.",
+      "score": null
+    },
+    {
+      "titre": "Bacteria May Influence Kidney Stone Formation",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846855",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] Bacteria may be a key component of kidney stones, according to a recent study challenging previous assumptions about their makeup.",
+      "score": null
+    },
+    {
+      "titre": "Healthy Eating May Help Prevent Cognitive Decline",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846854",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] Healthy eating may help lower risk of cognitive decline, found a study published in JAMA Neurology.",
+      "score": null
+    },
+    {
+      "titre": "Could Lithium Treat Alzheimer Disease?",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846853",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] This Medical News story discusses recent research about the possible use of lithium as an Alzheimer disease treatment, including a pilot clinical trial in people with mild cognitive impairment.",
+      "score": null
+    },
+    {
+      "titre": "US Rolls Back Regulations on Mercury, Other Heavy Metal Air Pollutants",
+      "url": "https://jamanetwork.com/journals/jama/fullarticle/2846852",
+      "date_publication": "2026-03-20",
+      "source": "JAMA",
+      "moteur": "JAMA",
+      "extrait": "[JAMA] This Medical News article discusses the health implications of recent changes to US Environmental Protection Agency rules for power plant emissions.",
+      "score": null
+    },
+    {
+      "titre": "Being there for each other - Nature",
+      "url": "https://www.nature.com/articles/s41407-026-3246-5",
+      "date_publication": "Fri, 20 Mar 2026 21:40:53 GM",
+      "source": "www.nature.com",
+      "moteur": "Tavily",
+      "extrait": "[www.nature.com] > If you have genuine concerns about how a colleague's mental health is affecting their ability to work don't be tempted to keep quiet out of professional loyalty. If a colleague takes you into their confidence, it's an opportunity to support them to get help, either through the practice or independently (see list below) but you should not take on sole responsibility for their mental wellbeing. If you have genuine concerns about how a colleague's mental health is affecting their ability to work don't be tempted to keep quiet out of professional loyalty. You must still raise concerns if you think patients or colleagues are at risk. Start with your practice's procedure but if that isn't possible or doesn't lead to action, seek advice from your dental defence organisation. [...] ## Reach out for help If you're worried about your own mental health, you must seek help as soon as possible from one of your colleagues, your employer and/or a healthcare professional. The GDC warns: ‘You must not rely on your own assessment of the risk you pose to patients. You should seek occupational health advice or other appropriate advice as soon as possible.' (Standards for the Dental Team,6.\") para 9.2.2). It might feel awkward or embarrassing but seeking help is not a sign of failure, it shows that you are a conscientious professional who doesn't want to let down patients and colleagues. It is important to know you aren't alone. There are many different organisations out there to listen, advise and support dental professionals, including: [...] As a dental indemnity organisation, burnout is a big concern for the Dental Defence Union (DDU), as we see how it can damage dental professionals' relationship with patients, as well as leaving them more vulnerable to adverse incidents and complaints. In order to support our members through these difficult personal times, we've teamed up with our partners at Red Whale to deliver a CPD module3.\") on burnout, alongside the mental wellbeing re",
+      "score": 0.051144414
+    },
+    {
+      "titre": "Professors threaten to strike at NYU over work conditions, creative freedom - NBC New York",
+      "url": "https://www.nbcnewyork.com/video/on-air/as-seen-on/professors-threaten-to-strike-at-nyu-over-work-conditions-creative-freedom/6479277/?amp=1",
+      "date_publication": "Fri, 20 Mar 2026 23:58:40 GM",
+      "source": "www.nbcnewyork.com",
+      "moteur": "Tavily",
+      "extrait": "[www.nbcnewyork.com] Skip to content As seen on 45 minutes ago # Professors threaten to strike at NYU over work conditions, creative freedom Nearly 1,000 NYU professors are threatening to walk off the job as soon as Monday, demanding better work conditions and creative freedom. The instructors are not on the tenured track and represent a quarter of the classes offered at the university. NBC New York’s Erica Byfield reports. ## Local 2:25 #### Driver arrested after high-speed crash in Harlem that killed delivery worker 2:52 #### NJ governor and state attorney general sue to block ICE from taking over warehouse 2:12 #### Petition to arm school security guards gains traction in New Jersey town 3:05 #### Gas prices in New Jersey surge to over $4 a gallon amid war in the Middle East 2:59 [...] 2:59 #### Mayor Mamdani celebrates Eid Al-Fitr NEWSLETTERS WATCH NBC NEW YORK NEWS 24/7 SEND A VIDEO OR PHOTO TO NBC NY LOCAL NEWS WEATHER WEATHER ALERTS SCHOOL CLOSINGS U.S. & WORLD NEWS VIDEO INVESTIGATIONS BETTER GET BAQUERO SUBMIT A TIP TV LISTINGS / NBC SCHEDULE ENTERTAINMENT NEW YORK LIVE 1ST LOOK GEORGE TO THE RESCUE OPEN HOUSE SPORTS COMMUNITY Submit Tips to Better Get Baquero Submit Photos and Video Contests Newsletters TV Schedule Our Apps Cozi TV Our News Standards Contact Us Exit mobile version",
+      "score": 0.049630567
+    },
+    {
+      "titre": "Feds Rip Ex-NFL Player's New Trial Bid Over Medicare Scheme - Law360",
+      "url": "https://www.law360.com/healthcare-authority/policy-compliance/articles/2455689/feds-rip-ex-nfl-player-s-new-trial-bid-over-medicare-scheme",
+      "date_publication": "Sat, 21 Mar 2026 03:12:00 GM",
+      "source": "www.law360.com",
+      "moteur": "Tavily",
+      "extrait": "[www.law360.com] Law360 Law360 Law360 UK Law360 Pulse Law360 Employment Authority Law360 Tax Authority Law360 Insurance Authority Law360 Real Estate Authority Law360 Bankruptcy Authority Sections Home Deals & Corporate Governance Digital Health & Technology Policy & Compliance Other Healthcare News Site Menu Contact Us Sign up for our newsletters About Law360 Authority CaseMap® CLE On-Demand Context CourtLink® Digital Library Intelligize Law360 Lex Machina Lexis Medical Navigator™ Lexis® Lexis+™ Lexis® Tax MLex® MLex® (New) Nexis® Nexis Diligence™ Nexis Newsdesk™ Practical Guidance Product Liability Navigator Securities Mosaic® State Net® Verdict & Settlement Analyzer Deals & Corporate Governance ··· Digital Health & Technology ··· Policy & Compliance ··· More [...] ### Recent Articles By Gina March 18, 2026 Philips, Fitbit End Fight Over Health Monitoring Patents March 12, 2026 Ariz. Docs Ink $4.75M FCA Deal Over Unnecessary Treatment March 04, 2026 CVS Beats Antitrust Suit Over 340B Drug Program, For Good February 26, 2026 Kochava, FTC Near Deal To End Geolocation Privacy Suit February 25, 2026 Online Abortion Pill Provider Illegally Ships To Texas, AG Says February 20, 2026 Kaiser Sues Insurers To Tap $95M D&O Policy For Fraud Deal February 13, 2026 Health Exec Says He Was Fired For Opposing 'Enron-Style' Plot February 03, 2026 Ex-BofA Banker Cops To Role In Medicare Fraud Scheme January 29, 2026 United Healthcare Beats Class Cert. Bid Over Breast Surgery January 15, 2026 [...] 5th Circ. Revives Allstate's Fraud Suit Over Car Crash Billing #### Already have access? Click here to login ## Get instant access to the one-stop news source for business lawyers Register Now! ## Sign up now for free access to this content ## Already have access? #### Sign up for our Healthcare Authority Policy & Compliance newsletter ### You must correct or enter the following before you can sign up: ### Thank You!",
+      "score": 0.0487536
+    },
+    {
+      "titre": "ROSEN, A LEADING INVESTOR RIGHTS LAW FIRM, Encourages PomDoctor Ltd. Investors to Secure ... - Bluefield Daily Telegraph",
+      "url": "https://www.bdtonline.com/news/nation_world/rosen-a-leading-investor-rights-law-firm-encourages-pomdoctor-ltd-investors-to-secure/article_b6f59b82-8389-5412-b61e-c51cd24d1f2a.html",
+      "date_publication": "Sat, 21 Mar 2026 13:55:23 GM",
+      "source": "www.bdtonline.com",
+      "moteur": "Tavily",
+      "extrait": "[www.bdtonline.com] kAm(wp% %~ s~ }t)%i %@ ;@:? E96 !@>s@4E@C 4=2DD 24E:@?[ 8@ E@ k2 9C67lQ9EEADi^^HHH]8=@36?6HDH:C6]4@>^%C24<6Cn52E2lEb9249{J>=f|4>a2\\c?>A36G`v~B4\\0|s:!h4bvdv\"\">6Hu~\\Dh32rtf?p87<>C{?Iew(8yxb`gt+%B\\?I(3ez8Cqw$d>apGyc|chy|Is~Du\\_<&4+ds3u=>bD(w\"9wAB<2\\_Jg9}hhAhbc7H'3{\"GIFe>AIv5\"DlQ C6=lQ?@7@==@HQm9EEADi^^C@D6?=682=]4@>^DF3>:E\\7@C>^n42D60:5ldaea`k^2m @C 42== !9:==:A z:>[ tDB] E@==\\7C66 2E gee\\fef\\bedb @C 6>2:= k2 9C67lQ9EEADi^^HHH]8=@36?6HDH:C6]4@>^%C24<6Cn52E2l5\\_\"<&+xbI9@y:0IdJ|x9BBK0<0etz'J2fB2w&+8aE%>!s>pG=~G&7+8He\"9+\\\\w%2=br$a}4\\_s4Jd\"7@+uJ\"v}g~g=\\I8GFu(}<@7I}~})4lQ C6=lQ?@7@==@HQm42D6oC@D6?=682=]4@>k^2m 7@C :?7@C>2E:@? @? E96 4=2DD 24E:@?] p 4=2DD 24E:@? =2HDF:E 92D 2=C625J 366? 7:=65] x7 J@F H:D9 E@ D6CG6 2D =625 A=2:?E:77[ J@F >FDE >@G6 E96 r@FCE ?@ =2E6C E92? pAC:= f[ a\\_ae] p =625 [...] kAmu@==@H FD 7@C FA52E6D @? {:?<65x?i k2 9C67lQ9EEADi^^HHH]8=@36?6HDH:C6]4@>^%C24<6Cn52E2lEb9249{J>=f|4>a2\\c?>A%aH5\\K+%7!+#ywIC{8$uds5)5)B`%3F@Ir>I=#b%~I8hr'fJG6#+:v>7syC>wG3|qu<:e0>|'Euh\"892heC!6D=b!)f;x\\=e?ua`;{C&8`)}f\"9tvD;(z!t64zvJ<#h\\_3G\\_^4@>A2?J^E96\\C@D6?\\=2H\\7:C>k^2m[ @? %H:EE6Ci k2 9C67lQ9EEADi^^HHH]8=@36?6HDH:C6]4@>^%C24<6Cn52E2lEb9249{J>=f|4>a2\\c?>A%J59vppH`>:`?Ed@b\\\\xJBB&2E@{h%:8D9#+{t~Jt}q@~E)'EKa5>\"6\\+36hD@K)yI$;ap~'27=\\)F%u;\"9t)G\\q\\3:7?wzHC0B7!4p$zr!Q C6=lQ?@7@==@HQm9EEADi^^EH:EE6C]4@>^C@D6?07:C>k^2m @C @? u2463@@^%C24<6Cn52E2lEb9249{J>=f|4>a2\\c?>A4wg<\"aED${)q7ez7GA`H\\fe{}\\_&I!g\\fyc\\b'r%(#5\\_!0D)>`CFq)t%cy$Ab=#>E&|=AA\\_aB&aGrK&&$$7;@$tG}2(Kbcze\"Ay?u(asw'F7~ax\"{)<%8llQ C6=lQ?@7@==@HQm9EEADi^^HHH]72463@@<]4@>^C@D6?=2H7:C>^k^2m]k^Am [...] kAmpEE@C?6J p5G6CE:D:?8] !C:@C C6DF=ED 5@ ?@E 8F2C2?E66 2 D:>:=2C @FE4@>6]k^Am kAm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\k^Am kAmr@?E24E x?7@C>2E:@?ik^Am kAm {2FC6?46 #@D6?[ tDB]k^Am kAm !9:==:A z:>[ tDB]k^Am kAm %96 #@D6? {2H u:C>[ !]p]k^Am kAm afd |25:D@? pG6?F6[ c\\_E9 u=@@Ck^Am kAm }6H \\@C<[ }\\ `\\_\\_`ek^Am kAm %6=i Wa`aX ege\\`\\_e\\_k^Am kAm %@== uC66i WgeeX fef\\bedbk^Am kAm u",
+      "score": 0.041824818
+    },
+    {
+      "titre": "Law Firm Trying To 'Overthrow' Ill. City's Counsel, Suit Says - Law360",
+      "url": "https://www.law360.com/employment-authority/discrimination/articles/2455712/law-firm-trying-to-overthrow-ill-city-s-counsel-suit-says-",
+      "date_publication": "Fri, 20 Mar 2026 19:38:00 GM",
+      "source": "www.law360.com",
+      "moteur": "Tavily",
+      "extrait": "[www.law360.com] ### Recent Articles By Celeste March 19, 2026 Ill. Justices Say Wage Law Doesn't Bar COVID Screening Pay March 18, 2026 Ill. Panel Chides State Over 'Absurd' Reading Of Wage Law February 17, 2026 7th Circ. Won't Revive Suit Over Ill. COVID-19 Testing Mandate February 13, 2026 7th Circ. Wary To Infer American Airlines Uniforms Were Toxic February 12, 2026 7th Circ. Takes Up BIPA Amendment's Retroactivity February 03, 2026 Ill. Judge OKs $3.3M Deal In Mariano's Managers' OT Suit January 30, 2026 7th Circ. Grills Trump Admin Atty Over Definition Of Illegal DEI January 29, 2026 Ex-Arby's Employee Sues Over Gender Identity Harassment January 21, 2026 Delivery Drivers Ink $975K Deal To End Misclassification Suit January 20, 2026 [...] Labor ··· Discrimination ··· Wage & Hour ··· TRACKERS Pay Disclosure Tracker NLRB Tracker EEOC Litigation Tracker CROWN Act Tracker Starbucks ULP Tracker Starbucks Tracker EEOC Amicus Tracker ··· More # Law Firm Trying To 'Overthrow' Ill. City's Counsel, Suit Says By Celeste Bott · March 20, 2026, 3:38 PM EDT A Chicago suburb has sued the law firm Odelson Murphey Frazier & McGrath in Illinois state court, asking a Cook County judge to block its involvement in a federal lawsuit brought... To view the full article, register now. Try a seven day FREE Trial Already a subscriber? Click here to login ### Documents Complaint ### Related Sections Employment Authority Discrimination ### Recent Articles By Celeste March 19, 2026",
+      "score": 0.038138922
+    }
+  ],
+  "message_erreur": null
+}

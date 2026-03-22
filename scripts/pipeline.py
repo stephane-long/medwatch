@@ -27,7 +27,7 @@ def run_pipeline(query: str, days: int = 1) -> ReponseGlobale:
         future_newsapi = executor.submit(fetch_from_newsapi, query, days)
         future_tavily = executor.submit(fetch_from_tavily, query, days)
         future_googlenews = executor.submit(fetch_from_googlenews, query, days)
-        future_jama = executor.submit(fetch_from_jama, query, days)
+        future_jama = executor.submit(fetch_from_jama, days)
         future_ansm = executor.submit(fetch_from_ansm, query, days)
 
         # On récupère les résultats dès qu'ils sont prêts
