@@ -6,3 +6,5 @@ __pycache__
 .venv
 PROJECT_STATE.md
 CLAUDE.md
+.github
+evolution_medwatch.md
