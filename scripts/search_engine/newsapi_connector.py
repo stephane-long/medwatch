@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import datetime, timedelta
 from typing import List
 
@@ -12,7 +13,7 @@ def fetch_from_newsapi(query: str, days: int = 1) -> List[Article]:
     """
     api_key = os.getenv("NEWSAPI_API_KEY")
     if not api_key:
-        print("Avertissement: NEWSAPI_API_KEY non définie.")
+        print("Avertissement: NEWSAPI_API_KEY non définie.", file=sys.stderr)
         return []
 
     # Calcul de la date de début
@@ -63,6 +64,6 @@ def fetch_from_newsapi(query: str, days: int = 1) -> List[Article]:
                     pass
 
     except Exception as e:
-        print(f"Erreur lors de la requête NewsAPI: {str(e)}")
+        print(f"Erreur lors de la requête NewsAPI: {str(e)}", file=sys.stderr)
 
     return articles_trouves

@@ -1,7 +1,8 @@
 import html
 import re
+import sys
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List
 
 import httpx
@@ -55,34 +56,25 @@ def fetch_from_ansm(query: str = "", days: int = 1) -> List[Article]:
                         continue
 
                     # Conversion de la date (format attendu: Wed, 11 Mar 2026 14:00:00 +0100)
+                    dt = None
+                    date_publication = pub_date_raw
                     try:
-                        # On essaie de parser la date. On enlève l'offset de timezone pour strptime si besoin,
-                        # ou on utilise un format compatible.
-                        # Exemple: Wed, 11 Mar 2026 14:00:00 +0100
-                        # %z gère +0100
                         dt = datetime.strptime(pub_date_raw, "%a, %d %b %Y %H:%M:%S %z")
                         date_publication = dt.strftime("%Y-%m-%d")
                     except Exception:
-                        date_publication = pub_date_raw
+                        pass
 
                     # Nettoyage HTML basique
                     extrait_clean = re.sub(r"<[^>]+>", "", description).strip()
                     extrait = html.unescape(extrait_clean)
                     title = html.unescape(title)
 
-                    # Filtrage par date si days > 0
-                    if days > 0:
-                        try:
-                            # dt a été extrait plus haut (si possible)
-                            if "dt" in locals() and dt:
-                                now = datetime.now(
-                                    dt.tzinfo
-                                )  # Utilise la même timezone
-                                delta = now - dt
-                                if delta.days > days:
-                                    continue
-                        except Exception:
-                            pass
+                    # Filtrage par date si days > 0 et date parsée — sinon on conserve l'article
+                    if days > 0 and dt:
+                        now = datetime.now(dt.tzinfo)
+                        cutoff = (now - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
+                        if dt < cutoff:
+                            continue
 
                     article = Article(
                         titre=title,
@@ -95,6 +87,6 @@ def fetch_from_ansm(query: str = "", days: int = 1) -> List[Article]:
                     articles.append(article)
 
             except Exception as e:
-                print(f"Erreur lors de la récupération ANSM ({url}): {e}")
+                print(f"Erreur lors de la récupération ANSM ({url}): {e}", file=sys.stderr)
 
     return articles

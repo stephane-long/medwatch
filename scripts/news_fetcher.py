@@ -22,7 +22,7 @@ def fetch(
         1,
         "--days",
         "-d",
-        help="Nombre de jours dans le passé à rechercher (ex: 1 pour 24h)",
+        help="Nombre de jours calendaires à inclure (ex: 1 = depuis minuit de J-1)",
     ),
 ):
     """

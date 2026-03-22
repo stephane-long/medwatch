@@ -1,4 +1,5 @@
 import concurrent.futures
+import sys
 from typing import List
 
 from models import Article, ReponseGlobale
@@ -34,31 +35,31 @@ def run_pipeline(query: str, days: int = 1) -> ReponseGlobale:
             articles_ansm = future_ansm.result()
             all_articles.extend(articles_ansm)
         except Exception as e:
-            print(f"La pipeline a intercepté une erreur ANSM: {e}")
+            print(f"La pipeline a intercepté une erreur ANSM: {e}", file=sys.stderr)
 
         try:
             articles_googlenews = future_googlenews.result()
             all_articles.extend(articles_googlenews)
         except Exception as e:
-            print(f"La pipeline a intercepté une erreur GoogleNews: {e}")
+            print(f"La pipeline a intercepté une erreur GoogleNews: {e}", file=sys.stderr)
 
         try:
             articles_jama = future_jama.result()
             all_articles.extend(articles_jama)
         except Exception as e:
-            print(f"La pipeline a intercepté une erreur JAMA: {e}")
+            print(f"La pipeline a intercepté une erreur JAMA: {e}", file=sys.stderr)
 
         try:
             articles_newsapi = future_newsapi.result()
             all_articles.extend(articles_newsapi)
         except Exception as e:
-            print(f"La pipeline a intercepté une erreur NewsAPI: {e}")
+            print(f"La pipeline a intercepté une erreur NewsAPI: {e}", file=sys.stderr)
 
         try:
             articles_tavily = future_tavily.result()
             all_articles.extend(articles_tavily)
         except Exception as e:
-            print(f"La pipeline a intercepté une erreur Tavily: {e}")
+            print(f"La pipeline a intercepté une erreur Tavily: {e}", file=sys.stderr)
 
     # Passage au processeur pour déduplication et construction de la réponse
     final_response = process_results(query, all_articles)

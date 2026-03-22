@@ -1,7 +1,8 @@
 import html
 import re
+import sys
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List
 
 import httpx
@@ -67,15 +68,12 @@ def fetch_from_jama(query: str = "", days: int = 1) -> List[Article]:
                         except Exception:
                             pass
 
-                    # Filtrage par date si days > 0
+                    # Filtrage par date si days > 0 et date parsée — sinon on conserve l'article
                     if days > 0 and dt:
-                        try:
-                            now = datetime.now(dt.tzinfo)
-                            delta = now - dt
-                            if delta.days > days:
-                                continue
-                        except Exception:
-                            pass
+                        now = datetime.now(dt.tzinfo)
+                        cutoff = (now - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
+                        if dt < cutoff:
+                            continue
 
                     # Nettoyage HTML
                     extrait_clean = re.sub(r"<[^>]+>", "", description).strip()
@@ -93,6 +91,6 @@ def fetch_from_jama(query: str = "", days: int = 1) -> List[Article]:
                     articles.append(article)
 
             except Exception as e:
-                print(f"Erreur lors de la récupération JAMA ({url}): {e}")
+                print(f"Erreur lors de la récupération JAMA ({url}): {e}", file=sys.stderr)
 
     return articles

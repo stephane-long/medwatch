@@ -1,12 +1,12 @@
 ---
 name: medwatch
-description: Recherche et résume l'actualité récente concernant les médecins via NewsAPI à partir de requêtes en langage naturel.
+description: "Utiliser quand l’utilisateur demande une veille d’actualité médicale, une revue de presse, ou des informations récentes sur les médecins, le système de soins, une pathologie, un traitement, un médicament, l’ANSM, ou une source nommée. Agrège plusieurs sources (NewsAPI, Tavily, Google News RSS), filtre les résultats par pertinence et génère un rapport Markdown structuré."
 user-invocable: true
 ---
 
 # medwatch
 
-Ce skill permet aux journalistes de réaliser une veille automatisée sur des sujets de santé ou relatifs au système de soins concernant les médecins, en transformant une intention de recherche en une revue de presse structurée.
+Ce skill transforme une demande de veille médicale en revue de presse structurée pour des journalistes. Il collecte des articles issus de plusieurs sources, aide à évaluer leur pertinence pour les médecins et le système de soins, puis produit un rapport Markdown exploitable par une rédaction.
 
 ## Usage
 
@@ -49,59 +49,9 @@ Rédigez pour chaque article un résumé de 3 à 4 lignes maximum.
 
 **ACTION OBLIGATOIRE** : Vous DEVEZ générer et enregistrer ce rapport dans un fichier physique `reports/{query_sanitisée}_{date_du_jour}.md` (remplacez les espaces et caractères spéciaux par `_`). Une fois le fichier créé, confirmez son emplacement exact à l'utilisateur.
 
-Le rapport doit être structuré en **3 sections dans l'ordre suivant** (supprime la mention "Section x" dansle rapport final):
+Le rapport doit être structuré en suivant les instructions du fichier `TEMPLATE.md`.
 
----
 
-### Section 1 — En-tête de synthèse
-
-```
-# Veille {sujet} — {date_du_jour en toutes lettres}
-
-**Requête** : `{query}` | **Période** : {N} jour(s) | **Sources** : NewsAPI ({N} articles retenus), Tavily ({N} articles retenus)
-```
-
-> Si des erreurs ont été détectées lors de l'exécution, les mentionner ici sous forme de bloc citation.
-> Si les résultats sont peu pertinents, suggérer ici une requête alternative.
-
----
-
-### Section 2 — Articles retenus
-
-Répéter le gabarit suivant pour chaque article retenu :
-
-```
-### [TITRE DE L'ARTICLE EN MAJUSCULES]
-- **Source** : {source_name}
-- **Date** : {date_formatée}
-- **Résumé** : {synthèse de 3 à 4 lignes}
-- **Lien** : {url}
-```
-
----
-
-### Section 3 — Articles non retenus
-Cette section sert à justifier l'écartement de certains résultats pour garantir la crédibilité de la veille. Pour cahque article, n'oublie pas de metionner le titre, la source et l'URL.
-
-```
-## Articles non retenus
-
-**Doublons** *(Articles traitant du même sujet exact avec une information identique)*
-- {titre_court} — {source} — ({url})
-
-**Santé sans mention des médecins** *(Articles médicaux généraux ne ciblant pas la profession ou le système de soins)*
-- {titre_court} — {source} — ({url})
-
-**Justice / Faits divers** *(Sauf si implication déontologique majeure du médecin)*
-- {titre_court} — {source} — ({url})
-
-**Hors sujet** *(Sujets n'ayant aucun lien avec la santé ou la pratique médicale)*
-- {titre_court} — {source} — ({url})
-```
-
-> N'afficher que les catégories non vides. Les articles de sources majeures (Le Monde, etc.) ne doivent se trouver ici que s'ils sont réellement hors sujet ou doublons.
-
----
 
 ## Examples
 

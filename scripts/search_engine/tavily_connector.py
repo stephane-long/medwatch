@@ -1,4 +1,5 @@
 import os
+import sys
 from datetime import datetime
 from typing import List
 
@@ -12,7 +13,7 @@ def fetch_from_tavily(query: str, days: int = 1) -> List[Article]:
     """
     api_key = os.getenv("TAVILY_API_KEY")
     if not api_key:
-        print("Avertissement: TAVILY_API_KEY non définie.")
+        print("Avertissement: TAVILY_API_KEY non définie.", file=sys.stderr)
         return []
 
     client = TavilyClient(api_key=api_key)
@@ -57,9 +58,9 @@ def fetch_from_tavily(query: str, days: int = 1) -> List[Article]:
                 )
                 articles_trouves.append(article)
             except Exception as e:
-                print(f"Validation error for {item.get('title')}: {e}")
+                print(f"Validation error for {item.get('title')}: {e}", file=sys.stderr)
 
     except Exception as e:
-        print(f"Erreur lors de la requête Tavily: {str(e)}")
+        print(f"Erreur lors de la requête Tavily: {str(e)}", file=sys.stderr)
 
     return articles_trouves

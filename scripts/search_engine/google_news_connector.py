@@ -1,9 +1,11 @@
-import httpx
-import xml.etree.ElementTree as ET
-from datetime import datetime
-from typing import List
-import re
 import html
+import re
+import sys
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta
+from typing import List
+
+import httpx
 from models import Article
 
 def fetch_from_googlenews(query: str, days: int = 1) -> List[Article]:
@@ -33,12 +35,22 @@ def fetch_from_googlenews(query: str, days: int = 1) -> List[Article]:
                 source_name = source_elem.text if source_elem is not None else "Google News"
                 
                 # Conversion de la date (format RSS: Mon, 09 Mar 2026 17:00:02 GMT)
+                dt = None
+                date_publication = pub_date_raw
                 try:
-                    dt = datetime.strptime(pub_date_raw, "%a, %d %b %Y %H:%M:%S %Z")
+                    clean_date = pub_date_raw.replace("GMT", "+0000")
+                    dt = datetime.strptime(clean_date, "%a, %d %b %Y %H:%M:%S %z")
                     date_publication = dt.strftime("%Y-%m-%d")
                 except Exception:
-                    date_publication = pub_date_raw
-                
+                    pass
+
+                # Filtrage par date si days > 0 et date parsée — sinon on conserve l'article
+                if days > 0 and dt:
+                    now = datetime.now(dt.tzinfo)
+                    cutoff = (now - timedelta(days=days)).replace(hour=0, minute=0, second=0, microsecond=0)
+                    if dt < cutoff:
+                        continue
+
                 # Nettoyage HTML et décodage des entités (ex: &nbsp;)
                 extrait_clean = re.sub(r"<[^>]+>", "", description).strip()
                 extrait = html.unescape(extrait_clean)
@@ -55,6 +67,6 @@ def fetch_from_googlenews(query: str, days: int = 1) -> List[Article]:
                 articles.append(article)
                 
     except Exception as e:
-        print(f"Erreur lors de la récupération Google News: {e}")
+        print(f"Erreur lors de la récupération Google News: {e}", file=sys.stderr)
         
     return articles
