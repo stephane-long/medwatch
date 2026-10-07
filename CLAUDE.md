@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Présentation
 
-MedWatch est un **skill agentique de veille médicale** destiné aux journalistes. Il combine un ensemble de scripts Python (collecte multi-sources) avec des instructions LLM (`SKILL.md`) pour produire des revues de presse structurées au format Markdown.
+MedWatch est un **skill agentique de veille médicale** destiné aux journalistes du Quotidien du Médecin. Il dessert deux équipes aux profils distincts (socio-professionnel et médical) et combine des scripts Python (collecte multi-sources) avec des instructions LLM (`SKILL.md`) pour produire des revues de presse structurées au format Markdown.
 
 Le skill est invocable via la commande `/medwatch` dans Claude Code.
 
@@ -19,18 +19,20 @@ pip install -r scripts/requirements.txt
 ### Exécution
 ```bash
 # macOS/Linux
-scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "requête" --days 1
+scripts/.venv/bin/python -X utf8 scripts/news_fetcher.py "requête" --days 1 --profile sociopro
 
 # Windows
-scripts/.venv/Scripts/python.exe -X utf8 scripts/news_fetcher.py "requête" --days 1
+scripts/.venv/Scripts/python.exe -X utf8 scripts/news_fetcher.py "requête" --days 1 --profile sociopro
 ```
+
+Le paramètre `--profile` (`-p`) accepte `sociopro` ou `medical` et détermine les sources activées.
 
 Le flag `-X utf8` est obligatoire pour éviter les problèmes d'encodage (notamment sur Windows).
 
 ### Configuration
 Créer `scripts/.env` avec :
 ```
-NEWSAPI_KEY=votre_cle
+NEWSAPI_API_KEY=votre_cle
 TAVILY_API_KEY=votre_cle
 ```
 
@@ -58,8 +60,8 @@ medwatch/
 
 ### Flux de données
 
-1. `news_fetcher.py` reçoit `(query, days)` via CLI
-2. `pipeline.py` soumet les 5 connecteurs en parallèle ; chaque échec individuel est capturé silencieusement (résultats partiels)
+1. `news_fetcher.py` reçoit `(query, days, profile)` via CLI
+2. `pipeline.py` sélectionne les connecteurs selon le profil (`sociopro` : NewsAPI, Tavily, Google News, ANSM ; `medical` : JAMA, ANSM) et les lance en parallèle ; chaque échec individuel est capturé silencieusement (résultats partiels)
 3. `processing.py` déduplique par URL puis limite à 100 articles
 4. Le résultat est sérialisé en JSON minifié vers stdout (pour consommation LLM)
 

@@ -13,53 +13,37 @@ from search_engine import (
 )
 
 
-def run_pipeline(query: str, days: int = 1) -> ReponseGlobale:
+def run_pipeline(query: str, days: int = 1, profile: str = "sociopro") -> ReponseGlobale:
     """
-    Orchestre les requêtes en parallèle vers les différents moteurs de recherche,
-    puis traite et renvoie les résultats combinés.
+    Orchestre les requêtes en parallèle vers les moteurs de recherche
+    sélectionnés selon le profil, puis traite et renvoie les résultats combinés.
+
+    Profils :
+    - sociopro : NewsAPI, Tavily, Google News, ANSM
+    - medical  : JAMA, ANSM
     """
     all_articles: List[Article] = []
 
-    # Exécution des appels API en parallèle grâce à ThreadPoolExecutor
-    # Plus on ajoute de connecteurs, plus c'est efficace par rapport à l'approche séquentielle.
+    # Définition des connecteurs par profil
+    futures = {}
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        # On soumet les tâches
-        future_newsapi = executor.submit(fetch_from_newsapi, query, days)
-        future_tavily = executor.submit(fetch_from_tavily, query, days)
-        future_googlenews = executor.submit(fetch_from_googlenews, query, days)
-        future_jama = executor.submit(fetch_from_jama, days)
-        future_ansm = executor.submit(fetch_from_ansm, query, days)
+        # Connecteurs communs ou spécifiques selon le profil
+        if profile == "sociopro":
+            futures["NewsAPI"] = executor.submit(fetch_from_newsapi, query, days)
+            futures["Tavily"] = executor.submit(fetch_from_tavily, query, days)
+            futures["GoogleNews"] = executor.submit(fetch_from_googlenews, query, days)
+            futures["ANSM"] = executor.submit(fetch_from_ansm, query, days)
+        elif profile == "medical":
+            futures["JAMA"] = executor.submit(fetch_from_jama, days)
+            futures["ANSM"] = executor.submit(fetch_from_ansm, query, days)
 
-        # On récupère les résultats dès qu'ils sont prêts
-        try:
-            articles_ansm = future_ansm.result()
-            all_articles.extend(articles_ansm)
-        except Exception as e:
-            print(f"La pipeline a intercepté une erreur ANSM: {e}", file=sys.stderr)
-
-        try:
-            articles_googlenews = future_googlenews.result()
-            all_articles.extend(articles_googlenews)
-        except Exception as e:
-            print(f"La pipeline a intercepté une erreur GoogleNews: {e}", file=sys.stderr)
-
-        try:
-            articles_jama = future_jama.result()
-            all_articles.extend(articles_jama)
-        except Exception as e:
-            print(f"La pipeline a intercepté une erreur JAMA: {e}", file=sys.stderr)
-
-        try:
-            articles_newsapi = future_newsapi.result()
-            all_articles.extend(articles_newsapi)
-        except Exception as e:
-            print(f"La pipeline a intercepté une erreur NewsAPI: {e}", file=sys.stderr)
-
-        try:
-            articles_tavily = future_tavily.result()
-            all_articles.extend(articles_tavily)
-        except Exception as e:
-            print(f"La pipeline a intercepté une erreur Tavily: {e}", file=sys.stderr)
+        # Récupération des résultats
+        for name, future in futures.items():
+            try:
+                all_articles.extend(future.result())
+            except Exception as e:
+                print(f"La pipeline a intercepté une erreur {name}: {e}", file=sys.stderr)
 
     # Passage au processeur pour déduplication et construction de la réponse
     final_response = process_results(query, all_articles)

@@ -19,7 +19,7 @@ def deduplicate_articles(articles: List[Article]) -> List[Article]:
     return unique_articles
 
 
-def limit_results(articles: List[Article], max_items: int = 15) -> List[Article]:
+def limit_results(articles: List[Article], max_items: int = 100) -> List[Article]:
     """
     Limite le nombre d'articles pour ne pas saturer la fenêtre de contexte de Claude.
     """

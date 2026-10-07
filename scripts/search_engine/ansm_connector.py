@@ -25,8 +25,9 @@ def fetch_from_ansm(query: str = "", days: int = 1) -> List[Article]:
 
     articles = []
 
-    # On normalise la requête pour le filtrage
+    # On normalise la requête pour le filtrage, en séparant les termes OR
     query_lower = query.lower() if query else ""
+    query_terms = [t.strip() for t in query_lower.split(" or ") if t.strip()]
 
     with httpx.Client(follow_redirects=True) as client:
         for url in urls:
@@ -46,14 +47,11 @@ def fetch_from_ansm(query: str = "", days: int = 1) -> List[Article]:
                     description = item.findtext("description", "")
 
                     # Filtrage par mots-clés si une requête est fournie
-                    # Si la requête est "ANSM", on considère que tout est pertinent car c'est la source même
-                    if (
-                        query_lower
-                        and query_lower != "ansm"
-                        and query_lower not in title.lower()
-                        and query_lower not in description.lower()
-                    ):
-                        continue
+                    # Si la requête est "ANSM" (ou contient "ansm" comme terme), tout est pertinent
+                    if query_terms and "ansm" not in query_terms:
+                        text = (title + " " + description).lower()
+                        if not any(term in text for term in query_terms):
+                            continue
 
                     # Conversion de la date (format attendu: Wed, 11 Mar 2026 14:00:00 +0100)
                     dt = None
